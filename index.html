@@ -80,7 +80,7 @@
 
   <div class="divider">· · ·</div>
 
-  <div class="journey-card writing" href="https://anirood2.github.io/mywritings/" onclick="openWritingModal()" style="cursor:pointer;">
+  <div class="journey-card writing" onclick="openWritingModal()" style="cursor:pointer;">
     <div class="card-inner">
       <div class="card-emoji">🖊️</div>
       <div class="card-text">
@@ -140,7 +140,7 @@
 
   // Writing modal
   const WRITING_PIN = '2025w';
-  const WRITING_URL = 'https://anirood2.github.io/anirood2-writes/';
+  const WRITING_URL = 'https://anirood2.github.io/mywritings/';
   function openWritingModal() { document.getElementById('writingModal').classList.add('open'); document.getElementById('writingPinInput').focus(); }
   function closeWritingModal() { document.getElementById('writingModal').classList.remove('open'); document.getElementById('writingPinInput').value = ''; document.getElementById('writingPinError').style.display = 'none'; }
   function checkWritingPin() {
