@@ -38,6 +38,7 @@
 .pin-input:focus { border-color: #c4622d; }
 .pin-btn { width: 100%; padding: 13px; background: linear-gradient(135deg, #7c3c1e, #c4622d); color: white; border: none; border-radius: 10px; font-size: 0.95em; font-weight: 600; cursor: pointer; margin-bottom: 10px; }
 .pin-cancel { color: #484f58; font-size: 0.8em; cursor: pointer; }
+.journey-card.writing:active { border-color: #8b5cf6; }
 .pin-error { color: #ef4444; font-size: 0.82em; margin-bottom: 10px; display: none; }
 </style>
 
@@ -77,11 +78,37 @@
     </div>
   </div>
 
+  <div class="divider">· · ·</div>
+
+  <div class="journey-card writing" onclick="openWritingModal()" style="cursor:pointer;">
+    <div class="card-inner">
+      <div class="card-emoji">🖊️</div>
+      <div class="card-text">
+        <h2>My Writing</h2>
+        <p>Original stories, chapters and creative writing. Private access only.</p>
+      </div>
+      <span class="card-arrow">🔒</span>
+    </div>
+  </div>
+
 </div>
 
 <footer>
   Made with <span id="footerLink" style="cursor:default;">❤️</span> · <a href="https://github.com/anirood2">github.com/anirood2</a>
 </footer>
+
+<!-- Writing PIN modal -->
+
+<div class="modal" id="writingModal">
+  <div class="modal-box">
+    <h3>🔒 Private Writing</h3>
+    <p>Enter your PIN to access</p>
+    <input class="pin-input" id="writingPinInput" type="password" maxlength="6" placeholder="••••••" onkeydown="if(event.key==='Enter') checkWritingPin()">
+    <div class="pin-error" id="writingPinError">Incorrect PIN. Try again.</div>
+    <button class="pin-btn" onclick="checkWritingPin()">Enter</button>
+    <div class="pin-cancel" onclick="closeWritingModal()">Cancel</div>
+  </div>
+</div>
 
 <!-- Secret PIN modal -->
 
@@ -97,7 +124,7 @@
 </div>
 
 <script>
-  const SECRET_PIN = '0510';
+  const SECRET_PIN = '2025';
   const DASHBOARD_URL = 'https://anirood2.github.io/roopa-stories/dashboard-private.html';
 
   // Triple-tap the footer link to open dashboard
@@ -110,6 +137,17 @@
     if (tapCount >= 3) { tapCount = 0; openModal(); }
     // single/double tap on heart does nothing
   });
+
+  // Writing modal
+  const WRITING_PIN = '2025w';
+  const WRITING_URL = 'https://anirood2.github.io/anirood2-writes/';
+  function openWritingModal() { document.getElementById('writingModal').classList.add('open'); document.getElementById('writingPinInput').focus(); }
+  function closeWritingModal() { document.getElementById('writingModal').classList.remove('open'); document.getElementById('writingPinInput').value = ''; document.getElementById('writingPinError').style.display = 'none'; }
+  function checkWritingPin() {
+    const val = document.getElementById('writingPinInput').value;
+    if (val === WRITING_PIN) { window.location.href = WRITING_URL; }
+    else { document.getElementById('writingPinError').style.display = 'block'; document.getElementById('writingPinInput').value = ''; document.getElementById('writingPinInput').focus(); }
+  }
 
   function openModal() { document.getElementById('pinModal').classList.add('open'); document.getElementById('pinInput').focus(); }
   function closeModal() { document.getElementById('pinModal').classList.remove('open'); document.getElementById('pinInput').value = ''; document.getElementById('pinError').style.display = 'none'; }
