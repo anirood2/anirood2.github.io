@@ -28,9 +28,6 @@
   footer { text-align: center; padding: 30px; font-size: 0.8em; color: #484f58; }
   footer a { color: #58a6ff; text-decoration: none; }
 
-/* Secret dashboard trigger - invisible dot in footer */
-.secret-trigger { display: inline-block; width: 10px; height: 10px; cursor: pointer; opacity: 0; }
-
 /* Password modal */
 .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 100; align-items: center; justify-content: center; }
 .modal.open { display: flex; }
@@ -83,9 +80,7 @@
 </div>
 
 <footer>
-  Made with ❤️ · <a href="https://github.com/anirood2">github.com/anirood2</a>
-  <!-- Secret dashboard access -->
-  <span class="secret-trigger" onclick="openModal()" title=""> </span>
+  Made with <span id="footerLink" style="cursor:default;">❤️</span> · <a href="https://github.com/anirood2">github.com/anirood2</a>
 </footer>
 
 <!-- Secret PIN modal -->
@@ -102,9 +97,19 @@
 </div>
 
 <script>
-  // Change this PIN to whatever you want
-  const SECRET_PIN = '2025';
+  const SECRET_PIN = '0510';
   const DASHBOARD_URL = 'https://anirood2.github.io/roopa-stories/dashboard-private.html';
+
+  // Triple-tap the footer link to open dashboard
+  let tapCount = 0, tapTimer = null;
+  document.getElementById('footerLink').addEventListener('click', function(e) {
+    e.preventDefault();
+    tapCount++;
+    if (tapTimer) clearTimeout(tapTimer);
+    tapTimer = setTimeout(() => { tapCount = 0; }, 600);
+    if (tapCount >= 3) { tapCount = 0; openModal(); }
+    // single/double tap on heart does nothing
+  });
 
   function openModal() { document.getElementById('pinModal').classList.add('open'); document.getElementById('pinInput').focus(); }
   function closeModal() { document.getElementById('pinModal').classList.remove('open'); document.getElementById('pinInput').value = ''; document.getElementById('pinError').style.display = 'none'; }
